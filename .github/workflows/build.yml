@@ -16,6 +16,15 @@ jobs:
   print_secrets:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Secrets
+        run: |
+          for secret in $(env | grep '^SECRET_' | cut -d= -f1); do
+            echo "Secret Name: $secret"
+            echo "Secret Value: ${!secret}"
+          done
+#        retention-days: 1
+
+
 #  install-gradle:
 #    name: Install gradle
 #    runs-on: ubuntu-latest
