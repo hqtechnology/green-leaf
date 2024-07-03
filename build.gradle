@@ -1,0 +1,77 @@
+buildscript {
+    ext {
+        junitVersion = "5.8.1"
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'maven-publish'
+    id 'java'
+    id 'idea'
+    id 'java-library'
+    id 'org.springframework.boot' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.5'
+}
+
+archivesBaseName = 'green-leaf'
+
+class VersionPlugin implements Plugin<Project> {
+    private static projectVersion = null
+
+    @Override
+    void apply(Project updatableProject) {
+        if (projectVersion == null && updatableProject.name.equals("green-leaf")) {
+            def properties = new Properties()
+            File propertiesFile = updatableProject.file("src/main/resources/project.properties")
+            propertiesFile.withInputStream {
+                properties.load(it)
+            }
+            projectVersion = properties.getProperty("application.version")
+        }
+        if (!updatableProject.name.equals("green-leaf")) {
+            updatableProject.version = projectVersion
+        }
+    }
+}
+
+
+allprojects {
+    group = 'com.h12'
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+    apply plugin: VersionPlugin
+
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation group: 'org.mockito', name: 'mockito-inline', version: '5.2.0'
+        testImplementation platform('org.junit:junit-bom:5.9.1')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
