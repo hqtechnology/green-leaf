@@ -1,2 +1,3 @@
-include 'web-client'
+include 'gl-rest-client'
+include 'gl-circuit-breaker-rest-client'
 

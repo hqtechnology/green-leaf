@@ -1,4 +1,4 @@
-package com.h12.web.client.api;
+package com.h12.rest.client.api;
 
 import lombok.Data;
 

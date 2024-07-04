@@ -1,11 +1,10 @@
-package com.h12.web.client.api;
+package com.h12.rest.client.api;
 
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.retry.support.RetryTemplate;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
