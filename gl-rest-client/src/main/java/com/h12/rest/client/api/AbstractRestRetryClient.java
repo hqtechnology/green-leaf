@@ -3,12 +3,10 @@ package com.h12.rest.client.api;
 import com.h12.rest.client.api.exception.RestRetryException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.RetryCallback;
-import org.springframework.retry.support.RetryTemplate;
 
 import java.util.HashMap;
 
-public abstract class AbstractRestRetryClient extends AbstractRestClient {
-    public abstract RetryTemplate getRetryTemplate();
+public abstract class AbstractRestRetryClient extends AbstractRestClient implements RestRetryClient {
 
     @Override
     public <R> ResponseEntity<R> httpPost(String url, String body, HashMap<String, String> headers, Class<R> rClass) {
